@@ -196,10 +196,19 @@ class FilesFrameCanvas(tkinter.Canvas):
         self.files_frame = FilesFrame(self, root)
         self.create_window((0,0), window=self.files_frame, anchor='nw')
 
+        # Mousewheel
+        # OS X: MouseWheel
+        # X11: Button-4/Button-5
         self.bind_all("<MouseWheel>", self.on_mousewheel)
+        self.bind_all("<Button-4>", partial(self.on_mousewheel_scroll, distance=-2))
+        self.bind_all("<Button-5>", partial(self.on_mousewheel_scroll, distance=2))
+
+
+    def on_mousewheel_scroll(self, event, distance):
+        self.yview_scroll(distance, "units")
 
     def on_mousewheel(self, event):
-        print("mousewheel")
+        # self.yview_scroll(-1*event.delta, "units")
         pass
 
 
